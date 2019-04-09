@@ -73,7 +73,7 @@ root@kali:~# python3 nmapuniqueports.py Results/
 root@kali:~# 
 ```
   
-## segtest.py - Optimized Nmap scan for segmentation testing
+## nmapsegtest.py - Optimized Nmap scan for segmentation testing
 
 When doing a blind network scan, where every host is reported to be alive and all ports filtered, a large network scan will take forever to complete. After benchmarking Nmap and comparing results with different settings, including max-rtt-timeout,host-timeout,max-retries and min/max-hostgroup it was the rtt-timeout parameter that did the most decrease in scan time. A value of 150ms resulted in the fastest and most thorough scan for the network I assessed. Any lower value would fail to find all active services. 
   
@@ -82,5 +82,5 @@ $ python3 nmapsegtest.py &lt;network&gt;
 Tip: You can use xargs to do multiple Nmap scans in parallel. Just be sure to find the right number for your network, before you start to lose accuracy. The targets.txt can contain any number of subnets (separated by newlines). The following command will only run three Nmap processes simultaneously at any given time until the all the targets are scanned.
   
 ```
-$ cat targets.txt | xargs -I CMD -P 3 python3 segtest.py
+$ cat targets.txt | xargs -I CMD -P 3 python3 nmapsegtest.py
 ```
