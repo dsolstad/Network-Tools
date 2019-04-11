@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
 ##
-## Segmentation test
+## Simple segmentation scan
 ## Author: Daniel Solstad (dsolstad.com)
 ##
-## cat targets.txt | xargs -I CMD -P 3 python3 segtest.py CMD
+## 1. Get all unique ports from all nmap scans with nmapuniqueports.py. 
+##    $ python3 nmapuniqueports.py /path/to/previous/results > ports.txt
 ##
-## Afterwards run python3 nmapmerge.py /path/to/Results to view all potential openings.
+## 2. Write target subnets in targets.txt (seperated with newlines), then run:
+##    cat targets.txt | xargs -I CMD -P 3 python3 nmapsegtest.py CMD
+##    This will run three nmap processes in parallel at all times. 
+##    Increase/decrease accordingly to your network load.
+##
+## 3. Run $ python3 nmapmerge.py /path/to/new/results to view all potential openings.
 ##
 
 import sys
