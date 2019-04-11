@@ -10,7 +10,7 @@ import sys
 import os
  
 help = """
-nmapunique.py </path/to/scans>
+nmapuniqueports.py </path/to/scans>
  
 This script enumerates and prints out every unique port discovered in nmap scans.
 It will search in all subdirectries from the given starting point in the argument.
