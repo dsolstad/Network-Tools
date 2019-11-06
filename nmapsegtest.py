@@ -11,7 +11,12 @@
 ##    This will run three nmap processes in parallel at all times. 
 ##    Increase/decrease accordingly to your network load.
 ##
-## 3. Run $ python3 nmapmerge.py /path/to/new/results to view all potential openings.
+## 3. Move the results to a subfolder named e.g. after the source subnet. Example structure:
+##    /segtest/Results/Source_VLAN_101
+##    /segtest/Results/Source_VLAN_102
+##
+## 4. Run $ python3 nmapmerge.py /segtest/Results/Source_VLAN_101 to 
+##     view all potential openings from that VLAN.
 ##
 
 import sys
