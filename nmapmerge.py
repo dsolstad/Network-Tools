@@ -33,10 +33,10 @@ for subdir, dirs, files in os.walk(rootfolder):
         filename = os.path.join(subdir, file)
         if not filename.endswith('.nmap'): continue
 
-        for scan in open(filename, 'r').read().split("\n\n"):
+        for scan in open(filename, 'r').read().split("Nmap scan report"):
 
             info = {}
-            ipaddr = re.findall(r'Nmap scan report for (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})', scan)
+            ipaddr = re.findall(r'for (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})', scan)
             ports = re.findall(r'(\d+)\/(tcp|udp)\s+(.*?)\s+(.*?)\s+(.*?)', scan)
 
             for key, val in enumerate(ports):
