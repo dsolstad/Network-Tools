@@ -27,7 +27,10 @@ import subprocess
 target = sys.argv[1]
 target = target.replace("\n", "")
 
-results_dir = './Results/' + target.replace('/', '[') + ']/'
+if '/' in target:
+    results_dir = './Results/' + target.replace('/', '[') + ']/'
+else:
+    results_dir = './Results/' + target + '/'
 
 if not os.path.exists(results_dir):
     os.makedirs(results_dir)
