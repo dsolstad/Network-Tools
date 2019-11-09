@@ -65,7 +65,7 @@ ipaddr,port,protocol,state,service,version,
 root@kali:~# 
 ```
 
-## Get unique ports from Nmap scans
+## Get unique open ports from Nmap scans
 $ grep -Er '^[0-9]{1,6}\/[tcp|udp]' ./path/to/results/ | grep open | cut -d':' -f2 | cut -d'/' -f1 | sort -n | uniq | tr '\n' ','
 ```
 root@kali:~# grep -Er '^[0-9]{1,6}\/[tcp|udp]' Results/ | grep open | cut -d':' -f2 | cut -d'/' -f1 | sort -n | uniq | tr '\n' ','
@@ -73,7 +73,7 @@ root@kali:~# grep -Er '^[0-9]{1,6}\/[tcp|udp]' Results/ | grep open | cut -d':' 
 root@kali:~# 
 ```
   
-## Get unique hosts from Nmap scans
+## Get unique IP-adresses from Nmap scans
 $ grep -Eorh "([0-9]{1,3}\.){3}[0-9]{1,3}\." ./path/to/results/ | sort | uniq
 ```
 root@kali:~# grep -Eorh "([0-9]{1,3}\.){3}[0-9]{1,3}\." Results/ | sort | uniq
