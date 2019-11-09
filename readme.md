@@ -65,14 +65,24 @@ ipaddr,port,protocol,state,service,version,
 root@kali:~# 
 ```
 
-## nmapuniqueports.py - Get unique ports from Nmap scans
-$ nmapuniqueports.py &lt;path/to/folder&gt;
+## Get unique ports from Nmap scans
+$ grep -Er '^[0-9]{1,6}\/[tcp|udp]' ./path/to/results/ | grep open | cut -d':' -f2 | cut -d'/' -f1 | sort -n | uniq | tr '\n' ','
 ```
-root@kali:~# python3 nmapuniqueports.py Results/
+root@kali:~# grep -Er '^[0-9]{1,6}\/[tcp|udp]' Results/ | grep open | cut -d':' -f2 | cut -d'/' -f1 | sort -n | uniq | tr '\n' ','
 21,22,23,25,53,80,81,88,89,111,135,139,161,389,427,443,445
 root@kali:~# 
 ```
   
+## Get unique hosts from Nmap scans
+$ grep -Eorh "([0-9]{1,3}\.){3}[0-9]{1,3}\." ./path/to/results/ | sort | uniq
+```
+root@kali:~# grep -Eorh "([0-9]{1,3}\.){3}[0-9]{1,3}\." Results/ | sort | uniq
+192.168.0.1
+192.168.0.2
+192.168.0.3
+root@kali:~# 
+```
+
 ## nmapsegtest.py - Optimized Nmap scan for segmentation testing
 
 When doing a blind network scan, where every host is reported to be alive and all ports filtered, a large network scan will take forever to complete. After benchmarking Nmap and comparing results with different settings, including max-rtt-timeout,host-timeout,max-retries and min/max-hostgroup it was the rtt-timeout parameter that did the most decrease in scan time. A value of 150ms resulted in the fastest and most thorough scan for the network I assessed. Any lower value would fail to find all active services. 
