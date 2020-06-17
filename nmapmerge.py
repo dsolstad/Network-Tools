@@ -38,15 +38,16 @@ for subdir, dirs, files in os.walk(rootfolder):
             info = {}
             ipaddr = re.findall(r'for (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})', scan)
             ports = re.findall(r'(\d+)\/(tcp|udp)\s+(.*?)\s+(.*?)\s+(.*?)', scan)
-
-            for key, val in enumerate(ports):
-                info['ipaddr'] = ipaddr[0]
-                info['port'] = val[0]
-                info['protocol'] = val[1]
-                info['state'] = val[2]
-                info['service'] = val[3]
-                info['version'] = val[4]
-                results.append(dict(info))
+            try:
+                for key, val in enumerate(ports):
+                    info['ipaddr'] = ipaddr[0]
+                    info['port'] = val[0]
+                    info['protocol'] = val[1]
+                    info['state'] = val[2]
+                    info['service'] = val[3]
+                    info['version'] = val[4]
+                    results.append(dict(info))
+            except: pass
 
 try:
     # Print CSV headers
