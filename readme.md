@@ -64,6 +64,10 @@ ipaddr,port,protocol,state,service,version,
 192.168.1.2,139,udp,open|filtered,netbios-ssn,,
 root@kali:~# 
 ```
+Pro tip: Send the result to grep to filter out only open/non-filtered ports:
+```
+python3 nmapmerge.py Results/ | grep open | grep -v filtered
+```
 
 ## Get unique open ports from Nmap scans
 ```
@@ -72,7 +76,7 @@ root@kali:~# grep -Er '^[0-9]{1,6}\/[tcp|udp]' Results/ | grep open | cut -d':' 
 root@kali:~# 
 ```
   
-## Get unique IP-adresses from Nmap scans
+## Get unique IP-addresses from Nmap scans
 ```
 root@kali:~# grep -Eorh "([0-9]{1,3}\.){3}[0-9]{1,3}\." Results/ | sort | uniq
 192.168.0.1
@@ -87,7 +91,7 @@ When doing a blind network scan, where every host is reported to be alive and al
   
 $ python3 nmapsegtest.py &lt;network&gt;
   
-Tip: You can use xargs to do multiple Nmap scans in parallel. Just be sure to find the right number for your network, before you start to lose accuracy. The targets.txt can contain any number of subnets (separated by newlines). The following command will only run three Nmap processes simultaneously at any given time until the all the targets are scanned.
+Pro tip: You can use xargs to do multiple Nmap scans in parallel. Just be sure to find the right number for your network, before you start to lose accuracy. The targets.txt can contain any number of subnets (separated by newlines). The following command will only run three Nmap processes simultaneously at any given time until the all the targets are scanned.
   
 ```
 $ cat targets.txt | xargs -I CMD -P 3 python3 nmapsegtest.py CMD
