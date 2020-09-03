@@ -8,7 +8,7 @@
 ##
 ## 2. Write target subnets in targets.txt (seperated with newlines), then run:
 ##    cat targets.txt | xargs -I CMD -P 3 python3 nmapsegtest.py CMD
-##    This will run three nmap processes in parallel at all times. 
+##    This will run three nmap processes in parallel at all times.
 ##    Increase/decrease accordingly to your network load.
 ##
 ## 3. Move the results to a subfolder named e.g. after the source subnet. Example structure:
@@ -37,14 +37,18 @@ if '/' in target:
 else:
     results_dir = './Results/' + target + '/'
 
-if not os.path.exists(results_dir):
+if os.path.exists(results_dir):
+    sys.exit(0) # Target already scanned
+else:
     os.makedirs(results_dir)
 
 ports = open('./ports.txt','r').read().replace('\r', '').replace('\n', ',')
 
 cmd = ['nmap', '-sT', target, '-T4', '-n', '-v', '-Pn', '--reason', '-p', ports,
        '--max-retries=1',
-       '--max-rtt-timeout=150ms',
+       '--max-scan-delay=1',
+       '--max-rtt-timeout=200ms',
+       '--initial-rtt-timeout=200ms',
        '-oA', results_dir + 'scan']
 
 p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
