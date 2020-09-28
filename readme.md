@@ -44,6 +44,12 @@ root@kali:~# grep -Eorh "([0-9]{1,3}\.){3}[0-9]{1,3}\." Results/ | sort | uniq
 root@kali:~# 
 ```
 
+## Resolve all hostnames in a list of IP-adresses
+
+```
+root@kali:~# for h in $(cat ./hosts.txt); do printf "$h,%s\\n" $(dig +search +short "$h"); done
+```
+
 ## nmapsegtest.py - Optimized Nmap scan for segmentation testing
 
 When doing a blind network scan, where every host is reported to be alive and all ports filtered, a large network scan will take forever to complete. After benchmarking Nmap and comparing results with different settings, including max-rtt-timeout,host-timeout,max-retries and min/max-hostgroup it was the rtt-timeout parameter that did the most decrease in scan time. A value of 150ms resulted in the fastest and most thorough scan for the network I assessed. Any lower value would fail to find all active services. 
@@ -55,7 +61,6 @@ Pro tip: You can use xargs to do multiple Nmap scans in parallel. Just be sure t
 ```
 $ cat targets.txt | xargs -I CMD -P 3 python3 nmapsegtest.py CMD
 ```
-
 
 ## nmapscan.py - Nmap scanning simplified  
 This is just a wrapper around Nmap which will run a full host discovery, tcp, udp, os and version scan. It will also create output files for each host in all formats.
