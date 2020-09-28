@@ -1,6 +1,6 @@
-# NMAP-Tools
+# Network tools and scripts
 
-A collection of scripts built around Nmap.  
+A collection of network scripts.
 
 ## nmapmerge.py - Merge multiple Nmap ouputs into one CSV
 $ nmapmerge.py &lt;path/to/folder&gt;
