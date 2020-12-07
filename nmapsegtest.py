@@ -39,6 +39,7 @@ else:
     results_dir = './Results/' + target + '/'
 
 if os.path.exists(results_dir):
+    print ("Already scanned " + target)
     sys.exit(0) # Target already scanned
 else:
     os.makedirs(results_dir)
