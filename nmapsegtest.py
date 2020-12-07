@@ -3,8 +3,8 @@
 ## Simple segmentation scan
 ## Author: Daniel Solstad (dsolstad.com)
 ##
-## 1. Add '-p-' as a parameter to scan all 65k ports,
-##    or get all unique ports from previous nmap scans with nmapuniqueports.py. 
+## 1. Add '-p-' as a parameter to scan all 65k ports (uncomment ports variable),
+##    or, to speed up the test, get all unique ports from previous nmap scans with nmapuniqueports.py. 
 ##    $ python3 nmapuniqueports.py /path/to/previous/results > ports.txt
 ##
 ## 2. Write target subnets in targets.txt (seperated with newlines), then run:
