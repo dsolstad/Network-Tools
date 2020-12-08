@@ -62,6 +62,8 @@ Pro tip: You can use xargs to do multiple Nmap scans in parallel. Just be sure t
 $ cat targets.txt | xargs -I CMD -P 3 python3 nmapsegtest.py CMD
 ```
 
+More documention can be found in the top section of the script.
+
 ## nmapscan.py - Nmap scanning simplified  
 This is just a wrapper around Nmap which will run a full host discovery, tcp, udp, os and version scan. It will also create output files for each host in all formats.
   
