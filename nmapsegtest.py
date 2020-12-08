@@ -4,8 +4,9 @@
 ## Author: Daniel Solstad (dsolstad.com)
 ##
 ## 1. Chose ports
-##    Add '-p-' as a parameter to scan all 65k ports (uncomment ports variable),
-##    or, to speed up the test, get all unique ports from previous nmap scans with:
+##    By default, the script scans all 65k ports.
+##    You can speed up the scan by only scanning unique ports previously seen in the same network with.
+##    Run the following command against a folder with all the nmap results:
 ##    $ grep -Er '^[0-9]{1,6}\/[tcp|udp]' Results/ | grep open | cut -d':' -f2 | cut -d'/' -f1 | sort -n | uniq | tr '\n' ',' > ports.txt
 ##
 ## 2. Add targets and start scan
@@ -13,6 +14,7 @@
 ##    cat targets.txt | xargs -I CMD -P 3 python3 nmapsegtest.py CMD
 ##    This will run three nmap processes in parallel at all times. Increase/decrease -P accordingly to your network load.
 ##    You can further add --min-rate=x to the nmap command to speed it up further, but use with caution. Try e.g. with 1000 first.
+##    This script use full connect scan (-sT) to be more friendly towards firewalls, so that they don't keep the connections open.
 ##
 ## 3. Process results
 ##    Move the results to a subfolder named e.g. after the source subnet. Example structure:
@@ -51,7 +53,9 @@ if os.path.exists(results_dir):
 else:
     os.makedirs(results_dir)
 
-ports = open('./ports.txt','r').read().replace('\r', '').replace('\n', ',')
+ports = '1-65535'
+if os.path.exists('./ports.txt'):
+    ports = open('./ports.txt','r').read().replace('\r', '').replace('\n', ',')
 
 cmd = ['nmap', '-sT', target, '-T4', '-n', '-v', '-Pn', '--reason', '-p', ports,
        '--max-retries=1',
