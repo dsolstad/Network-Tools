@@ -30,14 +30,15 @@ python3 nmapmerge.py Results/ | grep open | grep -v filtered
 
 ## Get unique open ports from Nmap scans
 ```
-root@kali:~# grep -Er '^[0-9]{1,6}\/[tcp|udp]' Results/ | grep open | cut -d':' -f2 | cut -d'/' -f1 | sort -n | uniq | tr '\n' ','
+root@kali:~# grep -Er '^[0-9]{1,6}\/[tcp|udp]' Results/ | grep open | cut -d':' -f2 | cut -d'/' -f1 | sort -n -u | tr '\n' ','
 21,22,23,25,53,80,81,88,89,111,135,139,161,389,427,443,445
 root@kali:~# 
 ```
   
 ## Get unique IP-addresses from Nmap scans
+Note that this only works on gnmap files.
 ```
-root@kali:~# grep -Eorh "([0-9]{1,3}\.){3}[0-9]{1,3}\." Results/ | sort | uniq
+root@kali:~# grep -Eorh "([0-9]{1,3}\.){3}[0-9]{1,3}.*Status: Up" Results/ | cut -d' ' -f1 | sort -u
 192.168.0.1
 192.168.0.2
 192.168.0.3
