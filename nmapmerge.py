@@ -17,7 +17,7 @@ from termcolor import colored
 help = """
 nmapmerge.py <path/to/folder>
 
-The script expects will recursivly find all .nmap files from the target path and print out the merged result in CSV. 
+The script will recursivly find all .nmap files from the target path and print out the merged result in CSV. 
 """
 
 if len(sys.argv) != 2:
