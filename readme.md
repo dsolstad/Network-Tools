@@ -1,4 +1,16 @@
-# nmapmerge.py
+### Table of Contents
+
+[Merge multiple nmap scans into one CSV](https://github.com/dsolstad/Network-Tools#Merge multiple nmap scans into one CSV)
+
+[Get unique open ports from Nmap scans](https://github.com/dsolstad/Network-Tools#Get unique open ports from Nmap scans)
+
+[Resolve all hostnames from a list](https://github.com/dsolstad/Network-Tools#Resolve all hostnames from a list)
+
+[Network segmentation testing](https://github.com/dsolstad/Network-Tools#Network segmentation testing)
+
+[Setup VLAN interfaces](https://github.com/dsolstad/Network-Tools#Setup VLAN interfaces)
+
+# Merge multiple nmap scans into one CSV
 The script recursively goes through the given folder to find all .nmap files and presents a combined CSV of the results.  
 $ nmapmerge.py &lt;path/to/folder&gt;
 ```
@@ -54,7 +66,7 @@ root@kali:~# for h in $(cat ./hostnames.txt); do printf "$h,%s\\n" $(dig +search
 142.250.74.46,google.com
 ```
 
-# nmapsegtest.py
+# Network segmentation testing
 
 When doing a blind network scan, where every host is reported to be alive and all ports filtered, a large network scan will take forever to complete. This script runs nmap with optimized and tweaked settings. Please read all the comments in the top section of the script before running.
   
@@ -66,7 +78,7 @@ Pro tip: You can use xargs to do multiple Nmap scans in parallel. Just be sure t
 $ cat targets.txt | xargs -I CMD -P 3 python3 nmapsegtest.py CMD
 ```
 
-# vlancon.py
+# Setup VLAN interfaces
 A tool to easily setup multiple VLAN interfaces on Linux. It will use the highest available IP-address unless you specify a IP-address in the last argument.  
 
 Syntax:    
