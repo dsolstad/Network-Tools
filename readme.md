@@ -1,14 +1,10 @@
 ### Table of Contents
 
-[Merge multiple nmap scans into one CSV](https://github.com/dsolstad/Network-Tools#Merge multiple nmap scans into one CSV)
-
-[Get unique open ports from Nmap scans](https://github.com/dsolstad/Network-Tools#Get unique open ports from Nmap scans)
-
-[Resolve all hostnames from a list](https://github.com/dsolstad/Network-Tools#Resolve all hostnames from a list)
-
-[Network segmentation testing](https://github.com/dsolstad/Network-Tools#Network segmentation testing)
-
-[Setup VLAN interfaces](https://github.com/dsolstad/Network-Tools#Setup VLAN interfaces)
+[Merge multiple nmap scans into one CSV](https://github.com/dsolstad/Network-Tools#Merge-multiple-nmap-scans-into-one-CSV)
+[Get unique open ports from Nmap scans](https://github.com/dsolstad/Network-Tools#Get-unique-open-ports-from-Nmap-scans)
+[Resolve all hostnames from a list](https://github.com/dsolstad/Network-Tools#Resolve-all-hostnames-from-a-list)
+[Network segmentation testing](https://github.com/dsolstad/Network-Tools#Network-segmentation-testing)
+[Setup VLAN interfaces](https://github.com/dsolstad/Network-Tools#Setup-VLAN-interfaces)
 
 # Merge multiple nmap scans into one CSV
 The script recursively goes through the given folder to find all .nmap files and presents a combined CSV of the results.  
