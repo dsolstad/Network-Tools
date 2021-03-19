@@ -1,8 +1,8 @@
-# nmapmerge.py - Merge multiple Nmap ouputs into one CSV
+# nmapmerge.py
 The script recursively goes through the given folder to find all .nmap files and presents a combined CSV of the results.  
 $ nmapmerge.py &lt;path/to/folder&gt;
 ```
-root@kali:~# python3 nmapmerge.py Results/
+root@kali:~# python3 nmapmerge.py results/
 ipaddr,port,protocol,state,service,version,
 192.168.1.254,80,tcp,filtered,http,,
 192.168.1.254,443,tcp,filtered,https,,
@@ -22,19 +22,19 @@ root@kali:~#
 ```
 Pro tip: Send the result to grep to filter out only open/non-filtered ports:
 ```
-python3 nmapmerge.py Results/ | grep open | grep -v filtered
+python3 nmapmerge.py results/ | grep open | grep -v filtered
 ```
 
 # Get unique open ports from Nmap scans
-Recursively goes through the given folder (e.g. ./Results), parses all the files and presents a list of unique ports open. Works for .nmap files.
+Recursively goes through the given folder (e.g. ./results), parses all the files and presents a list of unique ports open. Works for .nmap files.
 ```
-root@kali:~# grep -Er '^[0-9]{1,6}\/[tcp|udp]' Results/ | grep open | cut -d':' -f2 | cut -d'/' -f1 | sort -n -u | tr '\n' ','
+root@kali:~# grep -Er '^[0-9]{1,6}\/[tcp|udp]' results/ | grep open | cut -d':' -f2 | cut -d'/' -f1 | sort -n -u | tr '\n' ','
 21,22,23,25,53,80,81,88,89,111,135,139,161,389,427,443,445
 root@kali:~# 
 ```
   
 # Get unique IP-addresses from Nmap scans
-Recursively goes through the given folder (e.g. ./Results), parses all the files and presents a list of unique IP addresses. Works best for .gnmap files.
+Recursively goes through the given folder (e.g. ./results), parses all the files and presents a list of unique IP addresses. Works best for .gnmap files.
 ```
 root@kali:~# grep -Eorh "([0-9]{1,3}\.){3}[0-9]{1,3}.*Status: Up" Results/ | cut -d' ' -f1 | sort -u
 192.168.0.1
@@ -52,6 +52,18 @@ google.com
 root@kali:~# for h in $(cat ./hostnames.txt); do printf "$h,%s\\n" $(dig +search +short "$h"); done
 8.8.4.4,dns.google.com
 142.250.74.46,google.com
+```
+
+# nmapsegtest.py
+
+When doing a blind network scan, where every host is reported to be alive and all ports filtered, a large network scan will take forever to complete. This script runs nmap with optimized and tweaked settings. Please read all the comments in the top section of the script before running.
+  
+$ python3 nmapsegtest.py &lt;network&gt;
+  
+Pro tip: You can use xargs to do multiple Nmap scans in parallel. Just be sure to find the right number for your network, before you start to lose accuracy. The targets.txt can contain any number of subnets/hosts (separated by newlines). The following command will only run three Nmap processes simultaneously at any given time until the all the targets are scanned.
+  
+```
+$ cat targets.txt | xargs -I CMD -P 3 python3 nmapsegtest.py CMD
 ```
 
 # vlancon.py
