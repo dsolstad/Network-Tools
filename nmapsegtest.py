@@ -6,25 +6,25 @@
 ## Important! Always start slower and then adjust the speed according to what the target network can handle. This can potentially bring a complete network down.
 ##
 ## 1. Choose tcp or udp and ports
-##    By default, the script scans all 65k tcp ports. Change cmd_tcp to cmd_udp on in the Popen function to scan UDP instead.
+##    By default, the script scans all 65k tcp ports. Change cmd_tcp to cmd_udp in the Popen function to scan UDP instead.
 ##    You can speed up the scan by only scanning unique ports previously seen in the same network with the following command:
-##    $ grep -Er '^[0-9]{1,6}\/[tcp|udp]' Results/ | grep open | cut -d':' -f2 | cut -d'/' -f1 | sort -n | uniq | tr '\n' ',' > ports.txt
+##    $ grep -Er '^[0-9]{1,6}\/[tcp|udp]' results/ | grep open | cut -d':' -f2 | cut -d'/' -f1 | sort -n | uniq | tr '\n' ',' > ports.txt
 ##
 ## 2. Add targets and start scan
 ##    Write target subnets in targets.txt (nmap syntax), seperated with newlines, then run:
 ##    cat targets.txt | xargs -I CMD -P 1 python3 nmapsegtest.py CMD
-##    This will run one nmap processes for each target consecutively. This can be increased if the target network can handle it.
-##    Scanning multiple single hosts will usually benefit more by multiple nmap instances, 
+##    This will run one nmap processes for each target consecutively, but can be increased by adjusting the -P argument, if the target network can handle it.
+##    Scanning multiple single hosts will usually benefit more by running multiple nmap instances, 
 ##      since nmap already does a good job optimizing when scanning a whole subnet.
 ##    This script use full connect scan (-sT) to be more friendly towards firewalls, so that they don't keep the connections open.
 ##
 ## 3. Process results
 ##    Move the results to a subfolder named e.g. after the source subnet. Example structure:
-##    /segtest/Results/Source_VLAN_101
-##    /segtest/Results/Source_VLAN_102
+##    ./segtest/results/Source_VLAN_101
+##    ./segtest/results/Source_VLAN_102
 ##
 ## 4. View results
-##    Run $ python3 nmapmerge.py /segtest/Results/Source_VLAN_101 to view all potential openings from that VLAN.
+##    Run $ python3 nmapmerge.py /segtest/results/Source_VLAN_101 to view all potential openings from that VLAN.
 ##
 
 import sys
@@ -45,9 +45,9 @@ if '#' in target:
     sys.exit()
     
 if '/' in target:
-    results_dir = './Results/' + target.replace('/', '[') + ']/'
+    results_dir = './results/' + target.replace('/', '[') + ']/'
 else:
-    results_dir = './Results/' + target + '/'
+    results_dir = './results/' + target + '/'
 
 if os.path.exists(results_dir):
     print ("[+] Skipping already scanned: " + target)
