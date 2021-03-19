@@ -3,6 +3,7 @@
 A collection of network scripts.
 
 ## nmapmerge.py - Merge multiple Nmap ouputs into one CSV
+The script recursively goes through the given folder to find all .nmap files and presents a combined CSV of the results.
 $ nmapmerge.py &lt;path/to/folder&gt;
 ```
 root@kali:~# python3 nmapmerge.py Results/
@@ -29,6 +30,7 @@ python3 nmapmerge.py Results/ | grep open | grep -v filtered
 ```
 
 ## Get unique open ports from Nmap scans
+Recursively goes through the given folder (e.g. ./Results), parses all the files and presents a list of unique ports open. Works for .nmap files.
 ```
 root@kali:~# grep -Er '^[0-9]{1,6}\/[tcp|udp]' Results/ | grep open | cut -d':' -f2 | cut -d'/' -f1 | sort -n -u | tr '\n' ','
 21,22,23,25,53,80,81,88,89,111,135,139,161,389,427,443,445
@@ -36,7 +38,7 @@ root@kali:~#
 ```
   
 ## Get unique IP-addresses from Nmap scans
-Note that this only works on gnmap files.
+Recursively goes through the given folder (e.g. ./Results), parses all the files and presents a list of unique IP addresses. Works best for .gnmap files.
 ```
 root@kali:~# grep -Eorh "([0-9]{1,3}\.){3}[0-9]{1,3}.*Status: Up" Results/ | cut -d' ' -f1 | sort -u
 192.168.0.1
@@ -45,10 +47,15 @@ root@kali:~# grep -Eorh "([0-9]{1,3}\.){3}[0-9]{1,3}.*Status: Up" Results/ | cut
 root@kali:~# 
 ```
 
-## Resolve all hostnames in a list of IP-adresses
-
+## Resolve all hostnames from a list
+Returns a list of hostname,ip-addr pairs from a list of hostnames, separated by newlines, in hostnames.txt.
 ```
-root@kali:~# for h in $(cat ./hosts.txt); do printf "$h,%s\\n" $(dig +search +short "$h"); done
+root@kali:~# cat hostnames.txt
+dns.google.com
+google.com
+root@kali:~# for h in $(cat ./hostnames.txt); do printf "$h,%s\\n" $(dig +search +short "$h"); done
+8.8.4.4,dns.google.com
+142.250.74.46,google.com
 ```
 
 ## nmapsegtest.py - Optimized Nmap scan for segmentation testing
