@@ -3,7 +3,7 @@
 A collection of network scripts.
 
 ## nmapmerge.py - Merge multiple Nmap ouputs into one CSV
-The script recursively goes through the given folder to find all .nmap files and presents a combined CSV of the results.
+The script recursively goes through the given folder to find all .nmap files and presents a combined CSV of the results.  
 $ nmapmerge.py &lt;path/to/folder&gt;
 ```
 root@kali:~# python3 nmapmerge.py Results/
