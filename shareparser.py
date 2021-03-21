@@ -59,7 +59,7 @@ for subdir, dirs, files in os.walk(rootfolder):
             user = re.findall(r'account_used: (\S*)', raw_output)[0]
             
             info = {}
-            for table in root.iter('table'):
+            for table in host.iter('table'):
                 info['share'] = table.attrib['key']
                 info['dns'] = dns
                 info['type'] = host.find(".//elem[@key='Type']").text
