@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 ##
-## Recursevely parses nmap scans (xml) looking for network shares (SMB/CIFS/FTP), 
+## Recursively parses nmap scans (xml) looking for network shares (SMB/CIFS/FTP), 
 ##   discovered with the plugins smb-enum-shares and ftp-anon, and presents the result in CSV.
 ##
 ## Author: Daniel Solstad (dsolstad.com)
@@ -19,7 +19,7 @@ import xml.etree.ElementTree as ET
 help = """
 shareparser.py <path/to/folder>
 
-Recursevely parses nmap scans (xml) looking for network shares (SMB/CIFS/FTP), discovered with the plugins smb-enum-shares and ftp-anon, and presents the result in CSV.
+Recursively parses nmap scans (xml) looking for network shares (SMB/CIFS/FTP), discovered with the plugins smb-enum-shares and ftp-anon, and presents the result in CSV.
 """
 
 if len(sys.argv) != 2:
@@ -102,4 +102,3 @@ for subdir, dirs, files in os.walk(rootfolder):
                         print (',', end='')
                     print ()
         
- 
