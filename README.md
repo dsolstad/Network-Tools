@@ -9,7 +9,11 @@
 
 # Merge multiple nmap scans into one CSV
 The script recursively goes through the given folder to find all .nmap files and presents a combined CSV of the results.  
-$ nmapmerge.py &lt;path/to/folder&gt;
+Syntax:
+```
+$ nmapmerge.py <path/to/folder>
+```
+Example:
 ```
 root@kali:~# python3 nmapmerge.py results/
 ipaddr,port,protocol,state,service,version,
@@ -65,10 +69,11 @@ root@kali:~# for h in $(cat ./hostnames.txt); do printf "$h,%s\\n" $(dig +search
 
 # Network segmentation testing
 
-When doing a blind network scan, where every host is reported to be alive and all ports filtered, a large network scan will take forever to complete. This script runs nmap with optimized and tweaked settings. Please read all the comments in the top section of the script before running.
-  
-$ python3 nmapsegtest.py &lt;network&gt;
-  
+When doing a blind network scan, where every host is reported to be alive and all ports filtered, a large network scan will take forever to complete. This script runs nmap with optimized and tweaked settings. Please read all the comments in the top section of the script before running.  
+Syntax:
+```
+$ python3 nmapsegtest.py <target network>
+```
 Pro tip: You can use xargs to do multiple Nmap scans in parallel. Just be sure to find the right number for your network, before you start to lose accuracy. The targets.txt can contain any number of subnets/hosts (separated by newlines). The following command will only run three Nmap processes simultaneously at any given time until the all the targets are scanned.
   
 ```
@@ -82,8 +87,11 @@ Example of nmap scan to run first:
 ```
 nmap -sT -sU -p U:137,T:21,139,445 --script smb-enum-shares --script-args smbdomain=<domain> smbusername=<user> smbpassword=<pw> --script ftp-anon <target> -oA scan
 ```
-Shareparser Syntax:    
-$ python3 shareparser.py &lt;path/to/folder&gt;
+Shareparser Syntax:
+```
+$ python3 shareparser.py <path/to/folder>
+```
+Example:
 ```
 root@kali:~# python3 shareparser.py results/
 Share,DNS,Type,Comment,Path,Anonymous access,User,Current user access
@@ -103,9 +111,11 @@ root@kali:~#
 # Setup VLAN interfaces
 A tool to easily setup multiple VLAN interfaces on Linux. It will use the highest available IP-address unless you specify a IP-address in the last argument.  
 
-Syntax:    
-$ python3 vlancon.py add|rem &lt;network&gt; &lt;interface&gt; &lt;vlan&gt; [&lt;preferred ip-addr&gt;]
-
+Syntax:
+```
+$ python3 vlancon.py add|rem <network> <interface> <vlan> [<preferred ip-addr>]
+```
+Example:
 ```
 root@kali:~# python3 vlancon.py add 192.168.1.0/24 eth1 101
 [+] Adding interface eth1.101 (192.168.1.0/24)  
@@ -133,7 +143,7 @@ root@kali:~# python3 vlancon.py add 192.168.1.0/24 eth1 101
 root@kali:~# ip route add default via 192.168.1.1
 ```
 
-### Comma VLANs
+### "Comma" VLANs
 If you encounter a VLAN with the name e.g. 101,2 you need to strip the comma part and use the subnet for the "parent" VLAN. Then manually add a static route to the target VLAN via a gateway. See the following example below:
   
 VLAN List:
