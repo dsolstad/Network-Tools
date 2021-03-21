@@ -1,9 +1,10 @@
 ### Table of Contents
 
 [Merge multiple nmap scans into one CSV](https://github.com/dsolstad/Network-Tools#Merge-multiple-nmap-scans-into-one-CSV)  
-[Get unique open ports from Nmap scans](https://github.com/dsolstad/Network-Tools#Get-unique-open-ports-from-Nmap-scans)  
+[Get unique open ports from nmap scans](https://github.com/dsolstad/Network-Tools#Get-unique-open-ports-from-nmap-scans)  
 [Resolve all hostnames from a list](https://github.com/dsolstad/Network-Tools#Resolve-all-hostnames-from-a-list)  
 [Network segmentation testing](https://github.com/dsolstad/Network-Tools#Network-segmentation-testing)  
+[Parse network shares into CSV](https://github.com/dsolstad/Network-Tools#Parse-network-shares-into-CSV)
 [Setup VLAN interfaces](https://github.com/dsolstad/Network-Tools#Setup-VLAN-interfaces)  
 
 # Merge multiple nmap scans into one CSV
@@ -33,7 +34,7 @@ Pro tip: Send the result to grep to filter out only open/non-filtered ports:
 python3 nmapmerge.py results/ | grep open | grep -v filtered
 ```
 
-# Get unique open ports from Nmap scans
+# Get unique open ports from nmap scans
 Recursively goes through the given folder (e.g. ./results), parses all the files and presents a list of unique ports open. Works for .nmap files.
 ```
 root@kali:~# grep -Er '^[0-9]{1,6}\/[tcp|udp]' results/ | grep open | cut -d':' -f2 | cut -d'/' -f1 | sort -n -u | tr '\n' ','
@@ -41,7 +42,7 @@ root@kali:~# grep -Er '^[0-9]{1,6}\/[tcp|udp]' results/ | grep open | cut -d':' 
 root@kali:~# 
 ```
   
-# Get unique IP-addresses from Nmap scans
+# Get unique IP-addresses from nmap scans
 Recursively goes through the given folder (e.g. ./results), parses all the files and presents a list of unique IP addresses. Works best for .gnmap files.
 ```
 root@kali:~# grep -Eorh "([0-9]{1,3}\.){3}[0-9]{1,3}.*Status: Up" Results/ | cut -d' ' -f1 | sort -u
@@ -72,6 +73,31 @@ Pro tip: You can use xargs to do multiple Nmap scans in parallel. Just be sure t
   
 ```
 $ cat targets.txt | xargs -I CMD -P 3 python3 nmapsegtest.py CMD
+```
+
+# Parse network shares into CSV
+Recursevely parses nmap scans (xml) looking for network shares (SMB/CIFS/FTP) and presents the result in CSV. Uses the output from nmap plugins smb-enum-shares and ftp-anon.
+  
+Example of nmap scan to run first:
+```
+nmap -sT -sU -p U:137,T:21,139,445 --script smb-enum-shares --script-args smbdomain=<domain> smbusername=<user> smbpassword=<pw> --script ftp-anon <target> -oA scan
+```
+Shareparser Syntax:    
+$ python3 shareparser.py &lt;path/to/folder&gt;
+```
+root@kali:~# python3 shareparser.py results/
+Share,DNS,Type,Comment,Path,Anonymous access,User,Current user access
+127.0.0.1:21,<none>,FTP,,,allowed,anonymous,,
+192.168.0.10:21,<none>,FTP,,,disabled,<none>,,
+\\192.168.0.10\Download,<none>,SMB/CIFS,System default share,C:\share\MD0_DATA\Download,<none>,guest,<none>,
+\\192.168.0.10\IPC$,<none>,SMB/CIFS,System default share,C:\share\MD0_DATA\Download,<none>,guest,<none>,
+\\192.168.0.10\Multimedia,<none>,SMB/CIFS,System default share,C:\share\MD0_DATA\Download,<none>,guest,<none>,
+\\192.168.0.10\Network Recycle Bin 1,<none>,SMB/CIFS,System default share,C:\share\MD0_DATA\Download,<none>,guest,<none>,
+\\192.168.0.10\Private,<none>,SMB/CIFS,System default share,C:\share\MD0_DATA\Download,<none>,guest,<none>,
+\\192.168.0.10\Public,<none>,SMB/CIFS,System default share,C:\share\MD0_DATA\Download,<none>,guest,<none>,
+\\192.168.0.10\Usb,<none>,SMB/CIFS,System default share,C:\share\MD0_DATA\Download,<none>,guest,<none>,
+\\192.168.0.10\Web,<none>,SMB/CIFS,System default share,C:\share\MD0_DATA\Download,<none>,guest,<none>,
+root@kali:~#  
 ```
 
 # Setup VLAN interfaces
