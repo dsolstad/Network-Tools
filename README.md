@@ -4,7 +4,7 @@
 [Get unique open ports from nmap scans](https://github.com/dsolstad/Network-Tools#Get-unique-open-ports-from-nmap-scans)  
 [Resolve all hostnames from a list](https://github.com/dsolstad/Network-Tools#Resolve-all-hostnames-from-a-list)  
 [Network segmentation testing](https://github.com/dsolstad/Network-Tools#Network-segmentation-testing)  
-[Parse network shares into CSV](https://github.com/dsolstad/Network-Tools#Parse-network-shares-into-CSV)
+[Parse network shares into CSV](https://github.com/dsolstad/Network-Tools#Parse-network-shares-into-CSV)  
 [Setup VLAN interfaces](https://github.com/dsolstad/Network-Tools#Setup-VLAN-interfaces)  
 
 # Merge multiple nmap scans into one CSV
