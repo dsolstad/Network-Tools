@@ -44,12 +44,14 @@ for subdir, dirs, files in os.walk(rootfolder):
 
         # Iterate through each host
         for host in root.iter('host'):
-        
-            # Gather DNS info
+            
+            # Fetch DNS info
             dns = '<none>'
-            if host.find(".//hostnames/hostname"):
-                dns = host.find(".//hostnames/hostname").attrib['name']
-
+            try:
+                if host.find(".//hostnames/hostname").attrib['name']:
+                    dns = host.find(".//hostnames/hostname").attrib['name']
+            except: pass
+            
             # Look for FTP services
             # TODO: Consider listing all files/folders on each line.
             for port in host.iter('port'):
@@ -99,3 +101,5 @@ for subdir, dirs, files in os.walk(rootfolder):
                         print (value, end='')
                         print (',', end='')
                     print ()
+        
+ 
