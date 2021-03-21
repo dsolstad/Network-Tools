@@ -87,7 +87,7 @@ $ python3 shareparser.py &lt;path/to/folder&gt;
 ```
 root@kali:~# python3 shareparser.py results/
 Share,DNS,Type,Comment,Path,Anonymous access,User,Current user access
-127.0.0.1:21,<none>,FTP,,,allowed,anonymous,,
+127.0.0.1:21,localhost,FTP,,,allowed,anonymous,,
 192.168.0.10:21,<none>,FTP,,,disabled,<none>,,
 \\192.168.0.10\Download,<none>,SMB/CIFS,System default share,C:\share\MD0_DATA\Download,<none>,guest,<none>,
 \\192.168.0.10\IPC$,<none>,SMB/CIFS,System default share,C:\share\MD0_DATA\Download,<none>,guest,<none>,
