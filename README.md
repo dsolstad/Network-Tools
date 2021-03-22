@@ -85,12 +85,24 @@ Recursively parses nmap scans (xml) looking for network shares (SMB/CIFS/FTP) an
   
 Example of nmap scan to run first:
 ```
-nmap -sT -sU -p U:137,T:21,139,445 --script smb-enum-shares --script-args smbdomain=<domain> smbusername=<user> smbpassword=<pw> --script ftp-anon <target> -oA scan
+nmap -sT -sU -p U:137,T:21,137,139,445 --script smb-enum-shares --script-args smbdomain=<domain>,smbusername=<user>,smbpassword=<pw> --script ftp-anon <target> -oA scan
+```
+
+Protip: You can run an nmap instance for each target to get the output for each subnet in a new file instead. This way, if your scan gets interrupted, you have more control and can easier continue the scan later. This can for example be done like the following.  
+  
+Bash:
+```bash
+cat targets.txt | while read t; do nmap -sT -sU -p U:137,T:21,137,139,445 --script smb-enum-shares --script-args smbdomain=<domain>,smbusername=<user>,smbpassword=<pw> --script ftp-anon $t -oA $(echo $t | tr '/', '_')
+```
+Powershell:
+```powershell
+foreach ($t in (Get-Content ".\targets.txt")) { nmap -sT -sU -p U:137,T:21,137,139,445 --script smb-enum-shares --script-args smbdomain=<domain>,smbusername=<user>,smbpassword=<pw> --script ftp-anon $t -oA ($t -replace '/','_') }
 ```
 Shareparser Syntax:
 ```
 $ python3 shareparser.py <path/to/folder>
 ```
+
 Example:
 ```
 root@kali:~# python3 shareparser.py results/
