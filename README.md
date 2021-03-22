@@ -98,6 +98,12 @@ Powershell:
 ```powershell
 foreach ($t in (Get-Content ".\targets.txt")) { nmap -sT -sU -p U:137,T:21,137,139,445 --script smb-enum-shares --script-args smbdomain=<domain>,smbusername=<user>,smbpassword=<pw> --script ftp-anon $t -oA ($t -replace '/','_') }
 ```
+Where targets.txt can look like this:
+```
+192.168.1.0/24
+192.168.2.0/24
+192.168.3.0/24
+```
 Shareparser Syntax:
 ```
 $ python3 shareparser.py <path/to/folder>
