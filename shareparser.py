@@ -30,7 +30,7 @@ if len(sys.argv) != 2:
 rootfolder = sys.argv[1]
 
 # Print CSV header
-print ("Share,DNS,Type,Comment,Path,Anonymous access,User,Current user access")
+print ("Share,DNS,Type,Comment,Anonymous access,User,Current user access")
 
 for subdir, dirs, files in os.walk(rootfolder):
     # Iterate through each file
@@ -52,19 +52,14 @@ for subdir, dirs, files in os.walk(rootfolder):
                     dns = host.find(".//hostnames/hostname").attrib['name']
             except: pass
             
+
             # Look for FTP services
             # TODO: Consider listing all files/folders on each line.
             for port in host.iter('port'):
-                if port.find(".//service").attrib['name'] == 'ftp':
-                    info = {}
+                if port.find(".//service").attrib['name'] == 'ftp' and port.find(".//state").attrib['state'] == 'open':
+                    info = {'share':'','dns':'','type':'FTP','comment':'','anon':'disabled','user':'<none>','access':''}
                     info['share'] = host.find(".//address").attrib['addr'] + ':' + port.attrib['portid']
                     info['dns'] = dns
-                    info['type'] = 'FTP'
-                    info['comment'] = ''
-                    info['path'] = ''
-                    info['anon'] = 'disabled'
-                    info['user'] = '<none>'
-                    info['access'] = ''
                     try:
                         raw = port.find(".//script[@id='ftp-anon']").attrib["output"]
                         if "Anonymous FTP login allowed" in raw:
@@ -77,25 +72,25 @@ for subdir, dirs, files in os.walk(rootfolder):
                         print (',', end='')
                     print ()
 
-
             # Look for smb-enum-shares output
             if host.find(".//hostscript"):
             
                 # Fetch the account used from the raw script output
-                raw = host.find(".//hostscript/script").attrib['output']
-                user = re.findall(r'account_used: (\S*)', raw)[0]
+                try:
+                    raw = host.find(".//hostscript/script").attrib['output']
+                    user = re.findall(r'account_used: (\S*)', raw)[0]
+                except: pass
                 
-                info = {}
+                info = {'share':'','dns':'','type':'SMB/CIFS','comment':'','anon':'','user':'','access':''}
                 for table in host.iter('table'):
-                    info['share'] = table.attrib['key']
-                    info['dns'] = dns
-                    #info['type'] = host.find(".//elem[@key='Type']").text
-                    info['type'] = 'SMB/CIFS'
-                    info['comment'] = host.find(".//elem[@key='Comment']").text
-                    info['path'] = host.find(".//elem[@key='Path']").text
-                    info['anon'] = host.find(".//elem[@key='Anonymous access']").text
-                    info['user'] = user
-                    info['access'] = host.find(".//elem[@key='Current user access']").text
+                    try:
+                        info['share'] = table.attrib['key']
+                        info['dns'] = dns
+                        info['comment'] = host.find(".//elem[@key='Comment']").text
+                        info['anon'] = host.find(".//elem[@key='Anonymous access']").text
+                        info['user'] = user
+                        info['access'] = host.find(".//elem[@key='Current user access']").text
+                    except: pass
                     
                     for key, value in info.items():
                         print (value, end='')
