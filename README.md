@@ -112,17 +112,17 @@ $ python3 shareparser.py <path/to/folder>
 Example:
 ```
 root@kali:~# python3 shareparser.py results/
-Share,DNS,Type,Comment,Path,Anonymous access,User,Current user access
-127.0.0.1:21,localhost,FTP,,,allowed,anonymous,,
-192.168.0.10:21,<none>,FTP,,,disabled,<none>,,
-\\192.168.0.10\Download,<none>,SMB/CIFS,System default share,C:\share\MD0_DATA\Download,<none>,guest,<none>,
-\\192.168.0.10\IPC$,<none>,SMB/CIFS,System default share,C:\share\MD0_DATA\Download,<none>,guest,<none>,
-\\192.168.0.10\Multimedia,<none>,SMB/CIFS,System default share,C:\share\MD0_DATA\Download,<none>,guest,<none>,
-\\192.168.0.10\Network Recycle Bin 1,<none>,SMB/CIFS,System default share,C:\share\MD0_DATA\Download,<none>,guest,<none>,
-\\192.168.0.10\Private,<none>,SMB/CIFS,System default share,C:\share\MD0_DATA\Download,<none>,guest,<none>,
-\\192.168.0.10\Public,<none>,SMB/CIFS,System default share,C:\share\MD0_DATA\Download,<none>,guest,<none>,
-\\192.168.0.10\Usb,<none>,SMB/CIFS,System default share,C:\share\MD0_DATA\Download,<none>,guest,<none>,
-\\192.168.0.10\Web,<none>,SMB/CIFS,System default share,C:\share\MD0_DATA\Download,<none>,guest,<none>,
+Share,DNS,Type,Comment,Anonymous access,User,Current user access
+127.0.0.1:21,localhost,FTP,,allowed,anonymous,,
+192.168.0.10:21,<none>,FTP,,disabled,<none>,,
+\\192.168.0.10\Download,<none>,SMB/CIFS,System default share,<none>,guest,<none>,
+\\192.168.0.10\IPC$,<none>,SMB/CIFS,System default share,<none>,guest,<none>,
+\\192.168.0.10\Multimedia,<none>,SMB/CIFS,System default share,<none>,guest,<none>,
+\\192.168.0.10\Network Recycle Bin 1,<none>,SMB/CIFS,System default share,<none>,guest,<none>,
+\\192.168.0.10\Private,<none>,SMB/CIFS,System default share,guest,<none>,
+\\192.168.0.10\Public,<none>,SMB/CIFS,System default share,<none>,guest,<none>,
+\\192.168.0.10\Usb,<none>,SMB/CIFS,System default share,<none>,guest,<none>,
+\\192.168.0.10\Web,<none>,SMB/CIFS,System default share,<none>,guest,<none>,
 root@kali:~#  
 ```
 
