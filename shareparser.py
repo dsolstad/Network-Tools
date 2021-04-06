@@ -86,10 +86,10 @@ for subdir, dirs, files in os.walk(rootfolder):
                     try:
                         info['share'] = table.attrib['key']
                         info['dns'] = dns
-                        info['comment'] = host.find(".//elem[@key='Comment']").text
-                        info['anon'] = host.find(".//elem[@key='Anonymous access']").text
+                        info['comment'] = table.find(".//elem[@key='Comment']").text
+                        info['anon'] = table.find(".//elem[@key='Anonymous access']").text
                         info['user'] = user
-                        info['access'] = host.find(".//elem[@key='Current user access']").text
+                        info['access'] = table.find(".//elem[@key='Current user access']").text
                     except: pass
                     
                     for key, value in info.items():
