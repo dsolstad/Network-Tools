@@ -81,22 +81,22 @@ $ cat targets.txt | xargs -I CMD -P 3 python3 nmapsegtest.py CMD
 ```
 
 # Parse network shares into CSV
-Recursively parses nmap scans (xml) looking for network shares (SMB/CIFS/FTP) and presents the result in CSV. Uses the output from nmap plugins smb-enum-shares and ftp-anon.
+Recursively parses nmap scans (xml) looking for network shares (SMB/CIFS/NFS/FTP), discovered with the plugins smb-enum-shares and ftp-anon, and presents the result in a merged CSV.
   
 Example of nmap scan to run first:
 ```
-nmap -sT -sU -p U:137,T:21,137,139,445 --script smb-enum-shares --script-args smbdomain=<domain>,smbusername=<user>,smbpassword=<pw> --script ftp-anon <target> -oA scan
+nmap -sT -sU -p U:137,T:21,111,137,139,445 --script smb-enum-shares,smb-ls,ftp-anon,nfs-ls --script-args smbdomain=<domain>,smbusername=<user>,smbpassword=<pw> <target> -oA scan
 ```
 
 Protip: You can run an nmap instance for each target to get the output for each subnet in a new file instead. This way, if your scan gets interrupted, you have more control and can easier continue the scan later. This can for example be done like the following.  
   
 Bash:
 ```bash
-cat targets.txt | while read t; do nmap -sT -sU -p U:137,T:21,137,139,445 --script smb-enum-shares --script-args smbdomain=<domain>,smbusername=<user>,smbpassword=<pw> --script ftp-anon $t -oA $(echo $t | tr '/', '_')
+cat targets.txt | while read t; do nmap -sT -sU -p U:137,T:21,111,137,139,445 --script smb-enum-shares,smb-ls,ftp-anon,nfs-ls --script-args smbdomain=<domain>,smbusername=<user>,smbpassword=<pw> $t -oA $(echo $t | tr '/', '_')
 ```
 Powershell:
 ```powershell
-foreach ($t in (Get-Content ".\targets.txt")) { nmap -sT -sU -p U:137,T:21,137,139,445 --script smb-enum-shares --script-args smbdomain=<domain>,smbusername=<user>,smbpassword=<pw> --script ftp-anon $t -oA ($t -replace '/','_') }
+foreach ($t in (Get-Content ".\targets.txt")) { nmap -sT -sU -p U:137,T:21,111,137,139,445 --script smb-enum-shares,smb-ls,ftp-anon,nfs-ls --script-args smbdomain=<domain>,smbusername=<user>,smbpassword=<pw> $t -oA ($t -replace '/','_') }
 ```
 Where targets.txt can look like this:
 ```
@@ -112,17 +112,18 @@ $ python3 shareparser.py <path/to/folder>
 Example:
 ```
 root@kali:~# python3 shareparser.py results/
-Share,DNS,Type,Comment,Anonymous access,User,Current user access
-127.0.0.1:21,localhost,FTP,,allowed,anonymous,,
-192.168.0.10:21,<none>,FTP,,disabled,<none>,,
-\\192.168.0.10\Download,<none>,SMB/CIFS,System default share,<none>,guest,<none>,
-\\192.168.0.10\IPC$,<none>,SMB/CIFS,System default share,<none>,guest,<none>,
-\\192.168.0.10\Multimedia,<none>,SMB/CIFS,System default share,<none>,guest,<none>,
-\\192.168.0.10\Network Recycle Bin 1,<none>,SMB/CIFS,System default share,<none>,guest,<none>,
-\\192.168.0.10\Private,<none>,SMB/CIFS,System default share,guest,<none>,
-\\192.168.0.10\Public,<none>,SMB/CIFS,System default share,<none>,guest,<none>,
-\\192.168.0.10\Usb,<none>,SMB/CIFS,System default share,<none>,guest,<none>,
-\\192.168.0.10\Web,<none>,SMB/CIFS,System default share,<none>,guest,<none>,
+ipaddr;dns;type;share;comment;anonymous_access;user_used;authenticated_user_access
+127.0.0.1;localhost;FTP;;Port 21;allowed,anonymous;;
+192.168.0.10;;FTP;;Port 21,disabled,<none>;;
+127.0.0.1;localhost;NFS;/mnt/test;Port 111;Read/Lookup;;;
+192.168.0.10;QNAP;SMB/CIFS;Download;System default share;<none>;guest;<none>;
+192.168.0.10;QNAP;SMB/CIFS;IPC$;System default share;<none>;guest;<none>;
+192.168.0.10;QNAP;SMB/CIFS;Multimedia;System default share;<none>;guest;<none>;
+192.168.0.10;QNAP;SMB/CIFS;Network Recycle Bin 1;System default share;<none>;guest;<none>;
+192.168.0.10;QNAP;SMB/CIFS;Private;System default share;guest;<none>;
+192.168.0.10;QNAP;SMB/CIFS;Public;System default share;<none>;guest;<none>;
+192.168.0.10;QNAP;SMB/CIFS;Usb;System default share;<none>;guest;<none>;
+192.168.0.10;QNAP;SMB/CIFS;Web;System default share;<none>;guest;<none>;
 root@kali:~#  
 ```
 
