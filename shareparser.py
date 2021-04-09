@@ -31,7 +31,7 @@ if len(sys.argv) != 2:
 rootfolder = sys.argv[1]
 
 # Print CSV header
-print ("ipaddr,dns,type,share,comment,anonymous_access,user_used,authenticated_user_access")
+print ("ipaddr;dns;type;share;comment;anonymous_access;user_used;authenticated_user_access")
 
 info = []
 
