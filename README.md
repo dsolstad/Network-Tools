@@ -110,7 +110,7 @@ Shareparser Syntax:
 $ python3 shareparser.py <path/to/folder>
 ```
 
-Example:
+Example output:
 ```
 root@kali:~# python3 shareparser.py results/
 ipaddr;dns;type;share;comment;anonymous_access;user_used;authenticated_user_access
