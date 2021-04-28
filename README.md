@@ -87,10 +87,9 @@ Example of nmap scan to run first:
 ```
 nmap -sT -sU -p U:137,T:21,111,137,139,445 --script smb-enum-shares,smb-ls,ftp-anon,nfs-ls --script-args smbdomain=<domain>,smbusername=<user>,smbpassword=<pw> <target> -oA scan
 ```
-
-Protip: You can run an nmap instance for each target to get the output for each subnet in a new file instead. This way, if your scan gets interrupted, you have more control and can easier continue the scan later. This can for example be done like the following.  
+Note: There is a bug in smb.lua which makes the smb-enum-shares plugin throw away all the discovered shares on a host if one of the shares failed. A fix for this is documented here: https://github.com/nmap/nmap/pull/2277/commits/135bd34422b0942c1713540638c59c46156f1c46
   
-Note: There is a bug in smb.lua which makes the smb-enum-shares plugin throw away all the discovered shares on a host if one of the shares failed. A fix for this is documented here: https://github.com/nmap/nmap/pull/2277/commits/135bd34422b0942c1713540638c59c46156f1c46  
+Protip: You can run an nmap instance for each target to get the output for each subnet in a new file instead. This way, if your scan gets interrupted, you have more control and can easier continue the scan later. This can for example be done like the following.  
   
 Bash:
 ```bash
