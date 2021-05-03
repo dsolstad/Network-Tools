@@ -97,7 +97,7 @@ cat targets.txt | while read t; do nmap -sT -sU -p U:137,T:21,111,137,139,445 --
 ```
 Powershell:
 ```powershell
-foreach ($t in (Get-Content ".\targets.txt")) { nmap -sT -sU -p U:137,T:21,111,137,139,445 --script smb-enum-shares,smb-ls,ftp-anon,nfs-ls --script-args smbdomain=<domain>,smbusername=<user>,smbpassword=<pw> $t -oA ($t -replace '/','_') }
+foreach ($t in (Get-Content ".\targets.txt")) { if ((Test-Path ($t -replace '/','_')) -eq $False) { nmap -sT -sU -p U:137,T:21,111,137,139,445 --script smb-enum-shares,smb-ls,ftp-anon,nfs-ls --script-args smbdomain=<domain>,smbusername=<user>,smbpassword=<pw> $t -oA ($t -replace '/','_') }}
 ```
 Where targets.txt can look like this:
 ```
