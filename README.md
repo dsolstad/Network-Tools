@@ -5,6 +5,7 @@
 [Resolve all hostnames from a list](https://github.com/dsolstad/Network-Tools#Resolve-all-hostnames-from-a-list)  
 [Network segmentation testing](https://github.com/dsolstad/Network-Tools#Network-segmentation-testing)  
 [Parse network shares into CSV](https://github.com/dsolstad/Network-Tools#Parse-network-shares-into-CSV)  
+[Convert subnets to a given length](https://github.com/dsolstad/Network-Tools#Parse-network-shares-into-CSV#Convert-subnets-to-a-given-length)
 [Setup VLAN interfaces](https://github.com/dsolstad/Network-Tools#Setup-VLAN-interfaces)  
 
 # Merge multiple nmap scans into one CSV
@@ -125,6 +126,28 @@ ipaddr;dns;type;share;comment;anonymous_access;user_used;authenticated_user_acce
 192.168.0.10;QNAP;SMB/CIFS;Public;System default share;<none>;guest;<none>;
 192.168.0.10;QNAP;SMB/CIFS;Usb;System default share;<none>;guest;<none>;
 192.168.0.10;QNAP;SMB/CIFS;Web;System default share;<none>;guest;<none>;
+root@kali:~#  
+```
+
+# Convert subnets to a given length
+This can be very handy if e.g. you are given a huge list of subnets with verious lengths and you want to convert these to equially sized smaller subnets without duplicates.
+  
+Syntax:
+```
+$ python3 subnetfixer.py <path/to/input.txt> <prefix>
+```
+Example:
+```
+root@kali:~# cat input.txt
+10.10.0.0/15
+10.11.0.0/16
+root@kali:~# python3 subnetfixer.py input.txt 24
+10.10.1.0/24
+10.10.2.0/24
+10.10.3.0/24
+...
+10.11.1.0/24
+10.11.2.0/24
 root@kali:~#  
 ```
 
