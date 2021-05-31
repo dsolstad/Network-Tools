@@ -5,7 +5,7 @@
 [Resolve all hostnames from a list](https://github.com/dsolstad/Network-Tools#Resolve-all-hostnames-from-a-list)  
 [Network segmentation testing](https://github.com/dsolstad/Network-Tools#Network-segmentation-testing)  
 [Parse network shares into CSV](https://github.com/dsolstad/Network-Tools#Parse-network-shares-into-CSV)  
-[Convert subnets to a given length](https://github.com/dsolstad/Network-Tools#Parse-network-shares-into-CSV#Convert-subnets-to-a-given-length)
+[Convert subnets to a given length](https://github.com/dsolstad/Network-Tools#Parse-network-shares-into-CSV#Convert-subnets-to-a-given-length)  
 [Setup VLAN interfaces](https://github.com/dsolstad/Network-Tools#Setup-VLAN-interfaces)  
 
 # Merge multiple nmap scans into one CSV
