@@ -4,7 +4,7 @@
 ##   discovered with the plugins smb-enum-shares, smb-ls, nfs-ls and ftp-anon, and presents the result in a merged CSV.
 ##
 ## Author: Daniel Solstad (dsolstad.com)
-## Version 0.2
+## Version 0.21
 ##
 
 import sys
@@ -129,9 +129,10 @@ for subdir, dirs, files in os.walk(rootfolder):
                         res['access'] = table.find(".//elem[@key='Current user access']").text
                     except: pass
                     
-                    # Setting anonymous access to <none> if smb-ls didn't get to list the file contents
+                    # Setting anon access and auth access to <none> if smb-ls didn't get to list the file contents
                     if res['share'] not in smb_ls:
                         res['anon'] = '<none>'
+                        res['access'] = '<none>'
                         
                     info.append(res)
 
