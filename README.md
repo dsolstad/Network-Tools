@@ -82,7 +82,7 @@ $ cat targets.txt | xargs -I CMD -P 3 python3 nmapsegtest.py CMD
 ```
 
 # Parse network shares into CSV
-Recursively parses nmap scans (xml) looking for network shares (SMB/CIFS/NFS/FTP), discovered with the plugins smb-enum-shares, smb-ls, ftp-anon and nfs-ls, and presents the result in a merged CSV.
+Recursively parses nmap scans (xml) looking for network shares (SMB/CIFS/NFS/FTP), discovered with the plugins smb-enum-shares, smb-ls, ftp-anon and nfs-ls, and presents the result in a merged CSV. It will also show permissions for each share, and show where no authentication is required.
   
 Example of nmap scan to run first:
 ```
