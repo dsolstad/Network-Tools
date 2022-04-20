@@ -38,7 +38,7 @@ import re
 import subprocess
 
 target = sys.argv[1]
-target = target.replace("\n", "")
+target = target.replace('\r', '').replace('\n', ',')
 
 if '#' in target:
     print ("[+] Skipping commented out line: " + target)
