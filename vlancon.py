@@ -18,8 +18,8 @@ import subprocess as sub
 import ipaddress
 from termcolor import colored
 
-if not os.geteuid() == 0:
-    print ("You need to run this with sudo")
+if os.geteuid() != 0:
+    print ("You need to run this with sudo - root privileges are required for modifying network interfaces")
     sys.exit()
 
 help = """
