@@ -18,6 +18,10 @@ import subprocess as sub
 import ipaddress
 from termcolor import colored
 
+if os.geteuid() != 0:
+    print ("You need to run this with sudo - root privileges are required for modifying network interfaces")
+    sys.exit()
+
 help = """
 vlancon.py add|rem <network/<cidr>> <interface> <vlan nr> [<preferred IP-addr>]
 
