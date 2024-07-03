@@ -12,7 +12,6 @@ if not sys.version_info[0] == 3:
 
 import os
 import re
-from termcolor import colored
 
 help = """
 nmapmerge.py <path/to/folder>
