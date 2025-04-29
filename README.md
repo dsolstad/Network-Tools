@@ -94,7 +94,7 @@ Protip: You can run an nmap instance for each target to get the output for each 
   
 Bash:
 ```bash
-cat targets.txt | while read t; do nmap -sT -sU -p U:137,T:21,111,137,139,445 --script smb-enum-shares,smb-ls,ftp-anon,nfs-ls --script-args smbdomain=<domain>,smbusername=<user>,smbpassword=<pw> $t -oA $(echo $t | tr '/', '_')
+cat targets.txt | while read t; do nmap -sT -sU -p U:137,T:21,111,137,139,445 --script smb-enum-shares,smb-ls,ftp-anon,nfs-ls --script-args smbdomain=<domain>,smbusername=<user>,smbpassword=<pw> $t -oA $(echo $t | tr '/', '_'); done
 ```
 Powershell:
 ```powershell
