@@ -35,7 +35,7 @@ for subdir, dirs, files in os.walk(rootfolder):
         for scan in open(filename, 'r').read().split("Nmap scan report"):
 
             info = {}
-            ipaddr = re.findall(r'for (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})', scan)
+            ipaddr = re.findall(r'for .*?(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})', scan)
             ports = re.findall(r'(\d+)\/(tcp|udp)[ ]+(\w*?)[ ]+([A-Za-z0-9\/\-\?]*)[ ]*?(.*)', scan)
             try:
                 for key, val in enumerate(ports):
